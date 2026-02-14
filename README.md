@@ -61,6 +61,7 @@ Desktop/
    ├─ VideoLabels.csv
    └─ Video/
       └─ video.mp4
+```
 
 So the video file path will be: Desktop/Video/Video/wideo.mp4
 
