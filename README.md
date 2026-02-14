@@ -54,6 +54,7 @@ Place the executable here: MoodScan/Resources/ffmpeg.exe
 ### 2) Create the `Video` folder NEXT TO the project folder
 Your folder layout must look like this:
 
+```text
 Desktop/
 ├─ MoodScan/           <-- your cloned repo (the project)
 └─ Video/              <-- separate folder next to the project
@@ -91,7 +92,7 @@ Example:
 (e.g., `happy(31.00-40.00), surprised(31.00-40.00)` → showing *either* emotion satisfies the assumption).
 
 #### `Length`
-Video duration in **seconds** (decimals allowed), e.g. `179.44`.
+Video duration in **seconds**, e.g. `179,44`.
 
 ---
 
@@ -105,7 +106,7 @@ Video duration in **seconds** (decimals allowed), e.g. `179.44`.
 ### 2️⃣ Setup
 1. Clone the repository
 2. Add `ffmpeg.exe` to:
-   - `MoodScan/Resources/ffmpeg/ffmpeg.exe`
+   - `MoodScan/Resources/ffmpeg.exe`
 3. Create the required folder structure:
    - `Desktop/Video/VideoLabels.csv`
    - `Desktop/Video/Video/<your_video>.mp4`
