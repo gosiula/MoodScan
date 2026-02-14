@@ -1,0 +1,203 @@
+﻿<Window x:Class="MoodScan.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mdi="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:MoodScan"
+        mc:Ignorable="d"
+        xmlns:viewModel="clr-namespace:MoodScan.ViewModel"
+        Icon="/Images/icon.ico"
+        Title="MoodScan" Height="600" Width="1200"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown"
+        Closing="Window_Closing">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
+    <Border CornerRadius="16">
+        <Border.Background>
+            <ImageBrush ImageSource="Images/background.png"
+                        Stretch="UniformToFill"/>
+        </Border.Background>
+        <Border x:Name="MainBorder"
+                CornerRadius="10"
+                BorderThickness="3">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" 
+                                     EndPoint="1,1"
+                                     GradientStops="{StaticResource BorderStops}"
+                                     MappingMode="RelativeToBoundingBox"/>
+            </Border.BorderBrush>
+
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0"
+                                     GradientStops="{StaticResource BackgroundStops}"
+                                     Opacity="0.95"/>
+            </Border.Background>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Background="{StaticResource color8}" 
+                        CornerRadius="10,10,0,0">
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="5"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Style="{StaticResource controlButton}" 
+                                Tag="{StaticResource color1}" 
+                                Grid.Column="1"
+                                Click="BtnMinimize_Click">
+                            <fa:ImageAwesome Icon="WindowMinimize" 
+                                             Style="{StaticResource controlButtonIcon}"/>
+                        </Button>
+
+                        <Button Style="{StaticResource controlButton}" 
+                                Tag="{StaticResource color2}" 
+                                Grid.Column="2"
+                                Click="BtnFullScreen_Click">
+                            <fa:ImageAwesome Icon="WindowMaximize" 
+                                             Style="{StaticResource controlButtonIcon}"/>
+                        </Button>
+
+                        <Button Style="{StaticResource controlButton}" 
+                                Tag="{StaticResource color3}" 
+                                Grid.Column="3"
+                                Click="BtnClose_Click">
+                            <fa:ImageAwesome Icon="Close" 
+                                             Style="{StaticResource controlButtonIcon}"/>
+                        </Button>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="1">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                                  VerticalScrollBarVisibility="{Binding IsScrollEnabled, Converter={StaticResource BoolToScrollBarConverter}}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="{Binding IsMenuVisible, Converter={StaticResource BoolToWidthConverter}}"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0"
+                                  Visibility="{Binding IsMenuVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Border CornerRadius="10,0,0,10">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,1" 
+                                                             EndPoint="1,0"
+                                                             GradientStops="{StaticResource BackgroundStops}"/>
+                                    </Border.Background>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <StackPanel Grid.Row="0">
+                                            <StackPanel Orientation="Horizontal"
+                                                        Height="60"
+                                                        Margin="30,25,0,40">
+                                                <Image Source="/Images/logo.png" 
+                                                       Height="40"/>
+                                                <TextBlock Text="MoodScan"
+                                                           Foreground="{StaticResource fontColor1}"
+                                                           FontSize="20"
+                                                           FontFamily="Montserrat"
+                                                           FontWeight="Medium"
+                                                           VerticalAlignment="Center"
+                                                           Margin="10,0,0,0"/>
+                                            </StackPanel>
+
+                                            <RadioButton Style="{StaticResource menuButton}" 
+                                                         Tag="{StaticResource color4}" 
+                                                         IsChecked="{Binding IsCameraChecked}"
+                                                         Command="{Binding ShowCameraViewCommand}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <mdi:PackIconMaterial Kind="MovieOpen" 
+                                                                          Style="{StaticResource menuButtonIcon}"/>
+                                                    <TextBlock Text="WIDEO" 
+                                                               Style="{StaticResource menuButtonText}"/>
+                                                </StackPanel>
+                                            </RadioButton>
+
+                                            <RadioButton Style="{StaticResource menuButton}" 
+                                                         Tag="{StaticResource color1}"
+                                                         IsChecked="{Binding IsDownloadChecked}"
+                                                         Command="{Binding ShowDownloadViewCommand}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <mdi:PackIconMaterial Kind="FolderDownloadOutline" 
+                                                                          Style="{StaticResource menuButtonIcon}"/>
+                                                    <TextBlock Text="POBIERZ WYNIKI" 
+                                                               Style="{StaticResource menuButtonText}"/>
+                                                </StackPanel>
+                                            </RadioButton>
+                                        </StackPanel>
+                                        <TextBlock Grid.Row="1"
+                                                   Text="Pomoc"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Bottom"
+                                                   FontSize="16"
+                                                   FontFamily="Montserrat"
+                                                   Margin="40,0,0,30">
+                                            <TextBlock.InputBindings>
+                                                <MouseBinding Gesture="LeftClick" 
+                                                              Command="{Binding ShowStartViewCommand}" />
+                                            </TextBlock.InputBindings>
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="FontWeight" 
+                                                            Value="Normal"/>
+                                                    <Setter Property="Foreground" 
+                                                            Value="{StaticResource fontColor2}"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" 
+                                                                 Value="True">
+                                                            <Setter Property="FontWeight" 
+                                                                    Value="Medium"/>
+                                                            <Setter Property="Foreground" 
+                                                                    Value="{StaticResource fontColor1}"/>
+                                                            <Setter Property="Cursor" 
+                                                                    Value="Hand"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <TextBlock Grid.Row="2"
+                                                   Text="Małgorzata Skowron    |    PWR 2025"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Bottom"
+                                                   FontWeight="Light"
+                                                   FontSize="10"
+                                                   FontFamily="Montserrat"
+                                                   Margin="40,0,0,30"
+                                                   Foreground="{StaticResource fontColor2}">
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                            <ContentControl x:Name="MainContentControl" 
+                                            Content="{Binding CurrentChildView}" 
+                                            Grid.Column="1"/>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </Border>
+    </Border>
+</Window>

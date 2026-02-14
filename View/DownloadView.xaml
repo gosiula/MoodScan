@@ -1,0 +1,146 @@
+﻿<UserControl x:Class="MoodScan.View.DownloadView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:local="clr-namespace:MoodScan.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Storyboard x:Key="DotsAnimation" RepeatBehavior="Forever">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Dot1" 
+                                           Storyboard.TargetProperty="Opacity"
+                                           Duration="0:0:1.5">
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0.3"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:1" Value="0.3"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Dot2" 
+                                           Storyboard.TargetProperty="Opacity"
+                                           Duration="0:0:1.5">
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0.3"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0.5" Value="0.3"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:1.5" Value="0.3"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Dot3" 
+                                           Storyboard.TargetProperty="Opacity"
+                                           Duration="0:0:1.5">
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0.3"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:1" Value="0.3"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:1.3" Value="1"/>
+                <DiscreteDoubleKeyFrame KeyTime="0:0:1.5" Value="0.3"/>
+            </DoubleAnimationUsingKeyFrames>
+
+        </Storyboard>
+    </UserControl.Resources>
+
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard Name="DotsStoryboard" Storyboard="{StaticResource DotsAnimation}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+
+    <Grid VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <TextBlock Foreground="{StaticResource fontColor2}"
+                       FontSize="16"
+                       FontFamily="Montserrat"
+                       Margin="50"
+                       Width="250"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"
+                       Text="Kliknij przycisk poniżej,aby&#x00A0;pobrać wszystkie pliki z&#x00A0;wynikami. Po&#x00A0;pobraniu znajdziesz je&#x00A0;w&#x00A0;folderze „Pobrane”.">
+            </TextBlock>
+        </Grid>
+
+        <Grid Grid.Row="1" 
+              Margin="0,0,0,20"
+              Visibility="{Binding IsDownloading, Converter={StaticResource BoolToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal" 
+                       HorizontalAlignment="Center">
+                <TextBlock Text="Pobieranie" 
+                           Foreground="{StaticResource fontColor2}"
+                           FontSize="16"
+                           FontFamily="Montserrat"
+                           Margin="0,0,5,0"/>
+                <TextBlock x:Name="Dot1" 
+                           Text="." 
+                           Foreground="{StaticResource fontColor2}"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           FontFamily="Montserrat"
+                           Opacity="0.3"/>
+                <TextBlock x:Name="Dot2" 
+                          Text="." 
+                          Foreground="{StaticResource fontColor2}"
+                          FontSize="16"
+                           FontWeight="Bold"
+                          FontFamily="Montserrat"
+                          Opacity="0.3"/>
+                <TextBlock x:Name="Dot3" 
+                           Text="." 
+                           Foreground="{StaticResource fontColor2}"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           FontFamily="Montserrat"
+                           Opacity="0.3"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Button Style="{StaticResource startButton}" 
+                    Tag="{StaticResource color1}" 
+                    VerticalAlignment="Top"
+                    Margin="0,0,0,50"
+                    Command="{Binding SaveFilesCommand}"
+                    IsEnabled="{Binding IsDownloadButtonEnabled}">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="POBIERZ" 
+                               Style="{StaticResource startButtonText}" 
+                               Margin="0,0,10,0"/>
+                    <fa:ImageAwesome Icon="Download" 
+                                     Width="14"
+                                     Height="14" 
+                                     Foreground="White"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <Popup Style="{StaticResource PopupStyle}" 
+               IsOpen="{Binding IsDownloadPopupOpen}">
+            <Border Background="{StaticResource color8}" 
+                    Padding="50" 
+                    BorderThickness="3"
+                    CornerRadius="10">
+                <Border.BorderBrush>
+                    <LinearGradientBrush StartPoint="0,0" 
+                                         EndPoint="1,1"
+                                         GradientStops="{StaticResource BorderStops}"
+                                         MappingMode="RelativeToBoundingBox"/>
+                </Border.BorderBrush>
+                <StackPanel>
+                    <TextBlock Text="{Binding DownloadMessage}" 
+                               Style="{StaticResource PopupTextStyle}" />
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Center">
+                        <Button Style="{StaticResource startButton}" 
+                                Tag="{StaticResource color5}" 
+                                Command="{Binding CloseDownloadPopupCommand}">
+                            <TextBlock Text="OK" 
+                                       Style="{StaticResource startButtonText}"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>
