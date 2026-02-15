@@ -51,6 +51,8 @@ https://www.ffmpeg.org/download.html#build-windows
 
 Place the executable here: MoodScan/Resources/ffmpeg.exe
 
+Make sure that in Visual Studio the ffmpeg.exe file has **Build Action = Content** and **Copy to Output Directory = Copy if newer** so it gets copied to the app’s output folder.
+
 ### 2) Create the `Video` folder NEXT TO the project folder
 Your folder layout must look like this:
 
