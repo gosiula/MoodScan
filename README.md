@@ -13,7 +13,7 @@ This project is part of a two-app research system:
 - ✅ **MoodScan** — collects emotion data while a user watches a video
 - 🔎 **MoodScanAnalyzer** — analyzes whether the expected emotions were met (per scene and overall)
 
-➡️ MoodScanAnalyzer repository: **[link]**
+➡️ MoodScanAnalyzer repository: **https://github.com/gosiula/MoodScanAnalyzer**
 
 ---
 
@@ -119,10 +119,10 @@ Video duration in **seconds**, e.g. `179,44`.
 ---
 
 ## 🔎 Analysis App
-MoodScan collects the emotion logs.  
+MoodScan **collects the emotion logs**.  
 To verify how many viewers reacted “as expected” per scene or across the entire video, use:
 
-➡️ **MoodScanAnalyzer**: **[link]**
+➡️ **MoodScanAnalyzer**: **https://github.com/gosiula/MoodScanAnalyzer**
 
 ---
 
